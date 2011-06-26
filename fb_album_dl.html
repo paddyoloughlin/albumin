@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en-IE">
+  <head>
+    <meta charset="utf-8">
+  <title>Facebook Album Downloader</title>
+  </head>
+  <body>
+    <div>
+      <form id="loginform">
+        <label>Username: </label>
+        <input type="text" name="username" required/>
+        <input type="submit" />
+      </form>
+    </div>
+    <div id="dump"></div>
+    <script src=https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.js></script>
+    <script>
+      var FB_URL = "https://graph.facebook.com/";
+
+      function login(username){
+/*
+        $.ajax({
+          url: FB_URL + username,
+          datatype: 'jsonp',
+          success: function(data){
+            $("#dump").text(data);
+          }
+        });
+*/
+        $.getJSON(FB_URL + username + '?callback=?', function(data){
+          $('#dump').text(JSON.stringify(data));
+        });
+      }
+
+      $("#loginform").submit(function(){
+        login($('input[name=username]').val());
+        return false;
+      });
+
+      $(document).ready(function(){
+        $('#dump').text(window.location.pathname);
+      });
+    </script>
+  </body>
+</html>
